@@ -8,18 +8,14 @@ export const runtime = "edge";
 
 export default async function HomePage() {
 
-  try {
-    const auth = getAuth();
-    // ดักไว้ว่าถ้า headers() มีปัญหา ให้คืนค่า session เป็น null ไปก่อน
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    }).catch(() => null);
+  const auth = getAuth();
+  // ดักไว้ว่าถ้า headers() มีปัญหา ให้คืนค่า session เป็น null ไปก่อน
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  }).catch(() => null);
 
-    if (session) {
-      redirect('/dashbord');
-    }
-  } catch (_e) {
-    console.warn("Auth check skipped in dev mode due to context missing");
+  if (session) {
+    redirect('/dashbord');
   }
 
   return (
