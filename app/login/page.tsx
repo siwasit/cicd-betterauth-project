@@ -1,7 +1,23 @@
+"use client";
 import Link from "next/link";
 import { signInAction } from "../action/auth";
+import { useRouter } from "next/navigation";
+
+export const runtime = "edge";
 
 export default function SignInPage() {
+
+    const router = useRouter();
+
+    async function handleSubmit(formData: FormData) {
+        const result = await signInAction(formData);
+        if (result?.success) {
+            // สั่ง redirect จากฝั่ง Client จะชัวร์กว่าในโหมด Dev
+            router.push("/dashboard");
+            router.refresh();
+        }
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
@@ -12,7 +28,7 @@ export default function SignInPage() {
                     </h2>
                 </div>
 
-                <form className="mt-8 space-y-6" action={signInAction}>
+                <form className="mt-8 space-y-6" action={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-4">
                         <div>
                             <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 mb-1">

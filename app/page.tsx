@@ -1,13 +1,18 @@
 // app/page.tsx
-import { auth } from '@/utils/auth';
+import { getAuth } from '@/utils/auth';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+
+export const runtime = "edge";
+
 export default async function HomePage() {
 
+  const auth = getAuth();
+  // ดักไว้ว่าถ้า headers() มีปัญหา ให้คืนค่า session เป็น null ไปก่อน
   const session = await auth.api.getSession({
     headers: await headers(),
-  });
+  }).catch(() => null);
 
   if (session) {
     redirect('/dashbord');
