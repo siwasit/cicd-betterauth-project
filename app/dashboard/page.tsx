@@ -1,10 +1,12 @@
 import { headers } from "next/headers";
-import { signOutAction } from "../action/auth";
-import { auth } from "@/utils/auth";
+import { getAuth } from "@/utils/auth";
 import { redirect } from "next/navigation";
+import { SignOutButton } from "./sign-out-button";
+
+export const runtime = "edge";
 
 export default async function DashboardPage() {
-
+    const auth = getAuth();
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -12,6 +14,7 @@ export default async function DashboardPage() {
     if (!session) {
         redirect('/login');
     }
+
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900 font-sans">
             <nav className="bg-white shadow-sm">
@@ -26,9 +29,10 @@ export default async function DashboardPage() {
                                 <span className="text-gray-600 px-3 py-2 text-sm font-medium">ยินดีต้อนรับ, {session.user.name}</span>
                             </div>
 
-                            <form action={signOutAction}>
+                            {/* <form action={handleSubmit}>
                                 <button type="submit" className="bg-indigo-600 cursor-pointer text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">ออกจากระบบ</button>
-                            </form>
+                            </form> */}
+                            <SignOutButton />
                         </div>
                     </div>
                 </div>
