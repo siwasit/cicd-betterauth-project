@@ -1,5 +1,0 @@
-# .eslintignore
-.wrangler
-.next
-node_modules
-dist
