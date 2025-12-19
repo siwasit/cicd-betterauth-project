@@ -18,7 +18,7 @@ export default async function HomePage() {
     if (session) {
       redirect('/dashbord');
     }
-  } catch (e) {
+  } catch (_e) {
     console.warn("Auth check skipped in dev mode due to context missing");
   }
 

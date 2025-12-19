@@ -18,7 +18,7 @@ export const getAuth = () => {
         // ระบุ Type ให้กับ context.env เพื่อให้เข้าถึง .DB ได้อย่างถูกต้อง
         const env = context?.env as CloudflareEnv;
         db = env?.DB;
-    } catch (e) {
+    } catch (_e) {
         console.warn("Cloudflare Context not found, check if you're using Wrangler proxy.");
     }
 
