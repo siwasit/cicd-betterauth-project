@@ -1,6 +1,6 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "cicd-betterauth-project"
-pages_build_output_dir = ".vercel/output" # สำหรับ Next.js on Pages ต้องใช้ที่นี่
+pages_build_output_dir = ".vercel/output/static"
 compatibility_date = "2024-11-18"
 
 [[d1_databases]]
