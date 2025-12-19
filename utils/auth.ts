@@ -6,29 +6,27 @@ import { nextCookies } from "better-auth/next-js";
 
 // กำหนด Interface สำหรับ Cloudflare Environment
 interface CloudflareEnv {
-    DB: D1Database;
+  DB: D1Database;
 }
 
 export const getAuth = () => {
     // กำหนด Type ให้ชัดเจนแทน any
     let db: D1Database | undefined;
-
-    // try {
-    //     const context = getRequestContext();
-    //     // ระบุ Type ให้กับ context.env เพื่อให้เข้าถึง .DB ได้อย่างถูกต้อง
-    //     const env = context?.env as CloudflareEnv;
-    //     db = env?.DB;
-    // } catch (_e) {
-    //     console.warn("Cloudflare Context not found, check if you're using Wrangler proxy.");
-    // }
-    const context = getRequestContext();
-    // ระบุ Type ให้กับ context.env เพื่อให้เข้าถึง .DB ได้อย่างถูกต้อง
-    const env = context?.env as CloudflareEnv;
-    db = env?.DB;
+    
+    try {
+        const context = getRequestContext();
+        // ระบุ Type ให้กับ context.env เพื่อให้เข้าถึง .DB ได้อย่างถูกต้อง
+        const env = context?.env as CloudflareEnv;
+        db = env?.DB;
+    } 
+    catch {
+        console.warn("Cloudflare Context not found, check if you're using Wrangler proxy.");
+    }
+    
 
     return betterAuth({
         database: prismaAdapter(
-            getPrisma(db!),
+            getPrisma(db!), 
             {
                 provider: "sqlite",
             }
